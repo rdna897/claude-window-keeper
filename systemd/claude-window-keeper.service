@@ -1,0 +1,16 @@
+[Unit]
+Description=Start the Claude five-hour window after reset
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+Environment=HOME=/root
+Environment=PATH=/root/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/local/bin/claude-window-keeper.sh
+# Must exceed LOOKAHEAD_SECONDS (the script may sleep until the reset) plus the request timeout.
+TimeoutStartSec=10min
+StandardOutput=journal
+StandardError=journal

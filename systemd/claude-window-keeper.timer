@@ -1,0 +1,11 @@
+[Unit]
+Description=Check the Claude five-hour window reset time
+
+[Timer]
+OnCalendar=*:0/5
+Persistent=true
+AccuracySec=1s
+Unit=claude-window-keeper.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,13 @@
+# Set to 0 to disarm (the script then only logs what it would do).
+LIVE_TRIGGER_ENABLED=1
+
+# Claude five-hour window.
+WINDOW_SECONDS=18000
+LOOKAHEAD_SECONDS=330
+MIN_INTERVAL_SECONDS=3600
+
+KEEPER_MODEL=claude-haiku-4-5-20251001
+KEEPER_EFFORT=low
+KEEPER_PROMPT='Reply with exactly: Hi'
+KEEPER_WORKDIR=/tmp
+EXEC_TIMEOUT_SECONDS=120
