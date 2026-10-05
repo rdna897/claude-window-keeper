@@ -15,19 +15,18 @@ At most one ping per hour. Each ping runs `claude -p` with `--safe-mode --tools 
 
 ## Requirements
 
-- Linux with systemd, root access
+- Linux with systemd
 - [Claude Code](https://claude.com/claude-code) logged in with a Claude subscription (reads `~/.claude/.credentials.json`; macOS Keychain is not supported)
 - `curl`, `jq`
 
-## Install
+## Install (no git needed)
 
 ```bash
-git clone https://github.com/rdna897/claude-window-keeper.git
-cd claude-window-keeper
-sudo ./install.sh
+curl -fsSL https://github.com/rdna897/claude-window-keeper/archive/refs/heads/main.tar.gz | tar -xz -C /tmp \
+  && sudo /tmp/claude-window-keeper-main/install.sh
 ```
 
-The installer enables the timer (it survives reboots) and finishes with a dry run that prints the detected reset time. It runs as root with `HOME=/root`; edit `User=`/`HOME=`/`PATH=` in `systemd/claude-window-keeper.service` first if your Claude login lives elsewhere.
+Run as the user who is logged in to Claude Code. The installer sets up the job for that user (override with `KEEPER_USER=name`), enables the timer so it survives reboots, and ends with a dry run showing the detected reset time. Re-running it keeps your settings. If you're already root, drop `sudo`.
 
 ## Usage
 
@@ -42,9 +41,7 @@ Settings (model, effort, prompt, `LIVE_TRIGGER_ENABLED`) are in `/etc/default/cl
 ## Uninstall
 
 ```bash
-sudo systemctl disable --now claude-window-keeper.timer
-sudo rm /etc/systemd/system/claude-window-keeper.{service,timer} /usr/local/bin/claude-window-keeper.sh /etc/default/claude-window-keeper
-sudo rm -r /var/lib/claude-window-keeper
+sudo /tmp/claude-window-keeper-main/install.sh uninstall
 ```
 
 ## Caveat
